@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b3d91">
+<title>Maharashtra Distributors — Billing</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand">MAHARASHTRA DISTRIBUTORS</div>
+    <div class="sub">Billing • Stock • Ledger</div>
+  </div>
+  <button class="iconbtn" onclick="showPage('settings')">⚙</button>
+</header>
+
+<main>
+<section id="dashboard" class="page active">
+  <h1>Dashboard</h1>
+  <div class="cards">
+    <div class="card"><span>Today's Sales</span><b id="todaySales">₹0</b></div>
+    <div class="card"><span>Today's Collection</span><b id="todayCollection">₹0</b></div>
+    <div class="card"><span>Outstanding</span><b id="outstanding">₹0</b></div>
+    <div class="card"><span>Stock Items</span><b id="stockItems">0</b></div>
+  </div>
+  <div class="quick">
+    <button onclick="newInvoice()">＋ New Bill</button>
+    <button onclick="showPage('purchases')">＋ Purchase</button>
+    <button onclick="showPage('products')">Products</button>
+    <button onclick="showPage('customers')">Customers</button>
+  </div>
+  <div class="panel">
+    <div class="panelhead"><h2>Recent Bills</h2><button class="small" onclick="showPage('invoices')">View all</button></div>
+    <div id="recentBills" class="list"></div>
+  </div>
+</section>
+
+<section id="billing" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>New Bill</h1></div>
+  <div class="panel">
+    <label>Customer / Retailer</label>
+    <select id="billCustomer"></select>
+    <label>Invoice Date</label><input type="date" id="billDate">
+  </div>
+  <div class="panel">
+    <div class="panelhead"><h2>Items</h2><button class="small" onclick="addBillRow()">＋ Add Item</button></div>
+    <div id="billRows"></div>
+  </div>
+  <div class="panel totals">
+    <div>Subtotal <b id="billSubtotal">₹0</b></div>
+    <div>GST <b id="billGst">₹0</b></div>
+    <div class="grand">Grand Total <b id="billTotal">₹0</b></div>
+    <label>Payment received</label><input type="number" id="billPaid" value="0" min="0" oninput="calcBill()">
+    <div>Balance <b id="billBalance">₹0</b></div>
+    <button class="primary" onclick="saveInvoice()">Save & Generate Invoice</button>
+  </div>
+</section>
+
+<section id="products" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>Products</h1></div>
+  <button class="primary" onclick="openProductForm()">＋ Add Product</button>
+  <div id="productList" class="list"></div>
+</section>
+
+<section id="customers" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>Customers</h1></div>
+  <button class="primary" onclick="openCustomerForm()">＋ Add Customer</button>
+  <div id="customerList" class="list"></div>
+</section>
+
+<section id="invoices" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>Invoices</h1></div>
+  <div id="invoiceList" class="list"></div>
+</section>
+
+<section id="purchases" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>Purchase Entry</h1></div>
+  <div class="panel">
+    <label>Supplier</label><input id="purchaseSupplier" placeholder="Supplier name">
+    <label>Date</label><input type="date" id="purchaseDate">
+    <label>Product</label><select id="purchaseProduct"></select>
+    <label>Quantity</label><input type="number" id="purchaseQty" min="1" value="1">
+    <label>Purchase Rate</label><input type="number" id="purchaseRate" min="0" value="0">
+    <button class="primary" onclick="savePurchase()">Save Purchase</button>
+  </div>
+  <div id="purchaseList" class="list"></div>
+</section>
+
+<section id="settings" class="page">
+  <div class="pagehead"><button class="back" onclick="showPage('dashboard')">←</button><h1>Settings</h1></div>
+  <div class="panel">
+    <label>Business Name</label><input id="businessName">
+    <label>GSTIN</label><input id="businessGstin" placeholder="Optional">
+    <label>Address</label><textarea id="businessAddress"></textarea>
+    <label>Phone</label><input id="businessPhone">
+    <button class="primary" onclick="saveSettings()">Save Settings</button>
+    <button class="danger" onclick="resetData()">Reset demo data</button>
+  </div>
+</section>
+</main>
+
+<nav class="bottom">
+  <button onclick="showPage('dashboard')">⌂<span>Home</span></button>
+  <button onclick="newInvoice()">＋<span>Bill</span></button>
+  <button onclick="showPage('products')">▣<span>Stock</span></button>
+  <button onclick="showPage('customers')">♙<span>Ledger</span></button>
+  <button onclick="showPage('settings')">⚙<span>More</span></button>
+</nav>
+
+<div id="modal" class="modal"><div class="modalbox"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<script src="app.js"></script>
+</body>
+</html>
